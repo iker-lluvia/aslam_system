@@ -54,6 +54,7 @@ If you use this code, please cite the related paper:
   journal={IEEE Access},
   title={{Camera pose optimisation for 3D mapping}},
   year={2022},
+  doi:{10.1109/ACCESS.2023.3239657}
 }
 ```
 
