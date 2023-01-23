@@ -1,0 +1,19 @@
+# Get the expected gain of the uncertainty octree given a pose
+geometry_msgs/PoseStamped pose
+#Resolution
+float32 h_res
+float32 v_res
+# Horizontal angle
+float32 angle_h_min
+float32 angle_h_max
+# Vertical angle
+float32 angle_v_min
+float32 angle_v_max
+# Range
+float32 range_min
+float32 range_max
+# Expected gain of the unknown voxels
+float32 unknown_gain_value
+---
+float32 gain
+int64 unknown_cells

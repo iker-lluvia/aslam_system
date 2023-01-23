@@ -1,0 +1,58 @@
+<!-- Launch file for the rrt-detector and the assigner -->
+
+
+<launch>
+  
+  <param name="namespace_init_count" value="1"/>
+  
+  <group ns="assigner">
+    <param name="global_frame" value="/map" />
+    <param name="robot_frame" value="base_link" />
+    <param name="plan_service" value="/move_base/GlobalPlanner/make_plan" />
+  </group>
+  
+<!--
+  <node pkg="rrt_exploration" type="frontier_opencv_detector" name="frontier_detector" output="screen">
+    <param name="map_topic" value="/map"/>
+  </node>
+-->
+  
+  <node pkg="rrt_exploration" type="global_rrt_detector" name="global_detector" output="screen">
+    <param name="map_topic" value="/map"/>
+    <param name="eta" value="1.0"/>
+  </node>
+  
+  <node pkg="rrt_exploration" type="local_rrt_detector" name="local_detector" output="screen">
+    <param name="map_topic" value="/map"/>
+    <param name="robot_frame" value="/base_link"/>
+    <param name="eta" value="0.1"/>
+  </node>
+  
+  <node pkg="rrt_exploration" type="filter.py" name="filter" output="screen">
+    <remap from="/move_base_node/global_costmap/costmap" to="/move_base/global_costmap/costmap"/>
+    <param name="map_topic" value="/map"/>
+    <param name="costmap_clearing_threshold" value="70"/> 
+    <param name="info_radius" value="1"/> 
+    <param name="goals_topic" value="/detected_points"/>
+    <param name="n_robots" value="1"/>
+    <param name="namespace" value=""/> 
+    <param name="namespace_init_count" value=""/> 
+    <param name="rate" value="30"/>
+  </node>
+  
+  <node pkg="rrt_exploration" type="assigner.py" name="assigner" output="screen">
+    <param name="map_topic" value="/map"/>
+    <param name="global_frame" value="map"/>
+    <param name="info_radius" value="4"/> 
+    <param name="info_multiplier" value="1.0"/> 
+    <param name="hysteresis_radius" value="3.0"/> 
+    <param name="hysteresis_gain" value="2.0"/> 
+    <param name="frontiers_topic" value="/filtered_points"/> 
+    <param name="n_robots" value="1"/>
+    <param name="namespace" value=""/>
+    <param name="namespace_init_count" value=""/> 
+    <param name="delay_after_assignement" value="2.0"/>
+    <param name="rate" value="30"/>
+  </node>
+  
+</launch>

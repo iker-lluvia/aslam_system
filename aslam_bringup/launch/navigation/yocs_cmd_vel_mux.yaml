@@ -1,0 +1,15 @@
+# cmd vel mux config
+subscribers:
+  - name:        "Teleop"
+    topic:       "/teleop/cmd_vel"
+    timeout:     0.2
+    priority:    0
+  - name:        "Turtlebot exploration 3d"
+    topic:       "/turtlebot_exploration_3d/cmd_vel"
+    timeout:     0.2
+    priority:    01
+  - name:        "Move base"
+    topic:       "/move_base/cmd_vel"
+    timeout:     0.2
+    priority:    2
+publisher:       "output/cmd_vel"

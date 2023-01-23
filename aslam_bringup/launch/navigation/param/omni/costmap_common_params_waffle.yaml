@@ -1,0 +1,28 @@
+# http://wiki.ros.org/costmap_2d/hydro/obstacles
+max_obstacle_height: 0.5
+obstacle_range: 3.0
+raytrace_range: 3.5
+
+#~ footprint: [[-0.205, -0.155], [-0.205, 0.155], [0.077, 0.155], [0.077, -0.155]]
+#~ footprint: [[-0.141, -0.155], [-0.141, 0.155], [0.141, 0.155], [0.141, -0.155]]
+robot_radius: 0.18
+
+obstacles:
+  track_unknown_space: true
+  footprint_clearing_enabled: true
+  combination_method: 1
+  
+  observation_sources: scan top_point_cloud
+  scan: {topic: scan, sensor_frame: base_scan, data_type: LaserScan, clearing: true, marking: true}
+  front_point_cloud: {topic: /front_camera/depth/points, sensor_frame: front_camera_rgb_optical_frame, data_type: PointCloud2, clearing: true, marking: true}
+  top_point_cloud: {topic: /top_camera/depth/points, sensor_frame: top_camera_rgb_optical_frame, data_type: PointCloud2, clearing: true, marking: true, min_obstacle_height: 0.05}
+
+inflation:
+  inflation_radius: 1.0
+  cost_scaling_factor: 5.0
+  inflate_unknown: true
+
+inflation_local:
+  inflation_radius: 1.0
+  cost_scaling_factor: 5.0
+  inflate_unknown: true

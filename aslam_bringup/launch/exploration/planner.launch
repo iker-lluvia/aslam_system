@@ -1,0 +1,28 @@
+<!-- Launch file for reconstruction 3D planner -->
+<launch>
+  
+  <!-- 3D camera pose optimizer -->
+  <node name="planner" pkg="reconstruction_3d_planner" type="planner" output="screen">
+    <param name="base_frame" value="base_link"/>
+    <param name="global_frame" value="odom"/>
+    <param name="sensor_frame" value="top_camera_rgb_optical_frame"/>
+    <param name="fov/resolution/horizontal" value="48"/>
+    <param name="fov/resolution/vertical" value="36"/>
+    <param name="fov/angle/horizontal/min" value="-0.52"/>  <!-- -29.5° -->
+    <param name="fov/angle/horizontal/max" value="0.52"/>  <!-- -29.5° -->
+    <param name="fov/angle/vertical/min" value="-0.41"/>  <!-- -23° -->
+    <param name="fov/angle/vertical/max" value="0.41"/>  <!-- 23° -->
+    <param name="fov/range/min" value="0.5"/>
+    <param name="fov/range/max" value="4.0"/>
+    <param name="unknown_gain_value" value="1.0"/>  <!-- Not used -->
+    <param name="pan/optimize" value="true"/>
+    <param name="pan/vel" value="3.141592"/>  <!-- 180º/s -->
+    <param name="pan/min" value="0.0"/>  <!-- No limit -->
+    <param name="pan/max" value="0.0"/>  <!-- No limit -->
+    <param name="pan/step" value="0.8"/>  <!-- 45º -->
+    <param name="pan/joint_name" value="telescopic_arm_continuous_joint"/>
+    <param name="pan/link_name" value="telescopic_arm_extension_base_link"/>
+    <param name="goal_selection_radius" value="1.0"/>  <!-- Not used (only for trajectory planning) -->
+  </node>
+  
+</launch>

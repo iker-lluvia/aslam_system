@@ -1,0 +1,23 @@
+<!-- Launch file for gmapping-->
+<!-- http://wiki.ros.org/gmapping?distro=kinetic -->
+<launch>
+  
+  <node name="slam_gmapping" pkg="gmapping" type="slam_gmapping" output="screen">
+    <param name="throttle_scans" value="1"/>
+    <param name="base_frame" value="base_link"/>
+    <param name="map_frame" value="map"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="map_update_interval" value="2.0"/>
+    <param name="maxUrange" value="4"/>
+    <param name="linearUpdate" value="1.0"/>
+    <param name="angularUpdate" value="0.5"/>
+    <param name="temporalUpdate" value="2.0"/>
+    <param name="particles" value="30"/>
+    <param name="xmin" value="-20"/>
+    <param name="ymin" value="-20"/>
+    <param name="xmax" value="20"/>
+    <param name="ymax" value="20"/>
+    <param name="delta" value="0.05"/> <!-- Resolution of the map (in metres per occupancy grid block) -->
+  </node>
+  
+</launch>

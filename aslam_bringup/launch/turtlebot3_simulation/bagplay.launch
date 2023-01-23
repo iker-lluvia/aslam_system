@@ -1,0 +1,17 @@
+<!-- Launch file for -->
+<launch>
+  
+  <arg name="bag_file" default="$(find aslam_bringup)/bag/t4p2_no_roof_small_warehouse_model_states_2022-09-14-08-26-35.bag"/>
+  
+  <node name="bag_player" pkg="rosbag" type="play" output="screen" args="--rate=1.0 $(arg bag_file)">
+    <remap from="/gazebo/model_states" to="/bag/gazebo/model_states"/>
+  </node>
+  
+  <node name="replicate_model_states" pkg="model_state_setter" type="replicate_model_states" output="screen" >
+<!--
+    <remap from="/bag/gazebo/model_states" to=""/>
+    <remap from="/gazebo/set_model_state" to=""/>
+-->
+  </node>
+  
+</launch>

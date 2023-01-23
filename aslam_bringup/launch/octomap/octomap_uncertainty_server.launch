@@ -1,0 +1,25 @@
+<launch>
+  
+  <node pkg="octomap_server" type="octomap_uncertainty_server_node" name="octomap_server">
+    <remap from="cloud_in" to="/top_camera/depth/points" />
+    
+    <param name="frame_id" type="string" value="odom" />
+    <param name="base_frame_id" type="string" value="base_link" />
+    <param name="height_map" value="false" />
+    <param name="colored_map" value="false" />
+    <param name="uncertainty_map" value="true" />
+    <param name="resolution" value="0.1" />
+    <param name="sensor_model/max_range" value="4.0" />
+    <param name="sensor_model/min_range" value="0.5" />
+    <param name="color/r" value="0.0" />
+    <param name="color/g" value="0.0" />
+    <param name="color/b" value="1.0" />
+    <param name="color/a" value="1.0" />
+    <param name="publish_free_space" value="false" />
+    <param name="color_free/r" value="0.0" />
+    <param name="color_free/g" value="1.0" />
+    <param name="color_free/b" value="0.0" />
+    <param name="color_free/a" value="1.0" />
+  </node>
+  
+</launch>

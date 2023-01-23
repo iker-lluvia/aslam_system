@@ -1,0 +1,42 @@
+rosbag record -o t1p1_bookstore_model_states /gazebo/model_states
+
+rosbag record -o t2p1_house_w_door_model_states /gazebo/model_states
+
+rosbag record -o t3p1_small_house_model_states /gazebo/model_states
+
+rosbag record -o t4p1_no_roof_small_warehouse_model_states /gazebo/model_states
+
+rosbag record -o t5p1_cafe_model_states /gazebo/model_states
+
+rosbag record -o t6p1_willowgarage_model_states /gazebo/model_states
+
+
+
+rosbag record -o t1p2_bookstore_model_states /gazebo/model_states
+
+rosbag record -o t2p2_house_w_door_model_states /gazebo/model_states
+
+rosbag record -o t3p2_small_house_model_states /gazebo/model_states
+
+rosbag record -o t4p2_no_roof_small_warehouse_model_states /gazebo/model_states
+
+rosbag record -o t5p2_cafe_model_states /gazebo/model_states
+
+rosbag record -o t6p2_willowgarage_model_states /gazebo/model_states
+
+
+
+with turtlebot_exploration_3d:
+
+
+rosbag record -o t1p1_3d_bookstore_model_states /gazebo/model_states
+
+rosbag record -o t2p1_3d_house_w_door_model_states /gazebo/model_states
+
+rosbag record -o t3p1_3d_small_house_model_states /gazebo/model_states
+
+rosbag record -o t4p1_3d_no_roof_small_warehouse_model_states /gazebo/model_states
+
+rosbag record -o t5p1_3d_cafe_model_states /gazebo/model_states
+
+rosbag record -o t6p1_3d_willowgarage_model_states /gazebo/model_states

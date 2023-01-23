@@ -1,0 +1,17 @@
+# http://wiki.ros.org/costmap_2d#costmap_2d.2Flayered.Parameters
+global_costmap:
+  global_frame: map
+  robot_base_frame: base_footprint
+
+  update_frequency: 5.0
+  publish_frequency: 1.0
+  transform_tolerance: 0.5
+
+  static_map: true
+  rolling_window: false
+  always_send_full_costmap: true
+  
+  plugins: 
+    - {name: static_map,       type: "costmap_2d::StaticLayer"}
+    - {name: obstacles,        type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation,        type: "costmap_2d::InflationLayer"}

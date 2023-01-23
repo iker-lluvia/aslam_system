@@ -1,0 +1,14 @@
+<!--  YOCS Velocity Multiplexer launcher  -->
+
+<launch>
+  <node pkg="nodelet" type="nodelet" name="standalone_nodelet_manager"  args="manager"/>
+  
+  <arg name="nodelet_manager_name"  default="standalone_nodelet_manager"/>
+  <arg name="config_file"           default="$(find aslam_bringup)/launch/navigation/yocs_cmd_vel_mux.yaml"/>
+
+  <node pkg="nodelet" type="nodelet" name="yocs_cmd_vel_mux"
+        args="load yocs_cmd_vel_mux/CmdVelMuxNodelet $(arg nodelet_manager_name)">
+    <param name="yaml_cfg_file" value="$(arg config_file)"/>
+    <remap from="yocs_cmd_vel_mux/output/cmd_vel" to="/cmd_vel"/>
+  </node>
+</launch>

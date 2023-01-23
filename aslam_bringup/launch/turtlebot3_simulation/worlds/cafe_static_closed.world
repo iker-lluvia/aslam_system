@@ -1,0 +1,149 @@
+<!-- Usage notes are located in this file, look for "Usage"-->
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="default">
+    <gui>
+      <camera name="user_camera">
+        <pose>0 -18 8.0 0 0.523 1.5707</pose>
+      </camera>
+    </gui>
+    <light name="sun" type="directional">
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>0 0.5 -0.9</direction>
+    </light>
+
+    <light name="point_light" type="point">
+      <pose>0 -0.377195 6.59868 0 -0 0</pose>
+      <diffuse>0.784314 0.784314 0.784314 1</diffuse>
+      <specular>0.0980392 0.0980392 0.0980392 1</specular>
+      <attenuation>
+        <range>50</range>
+        <constant>0.8</constant>
+        <linear>0</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>0</cast_shadows>
+      <direction>0 0 -1</direction>
+    </light>
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+<!--
+    <include>
+      <uri>model:///home/tekniker/ROS/aslam_ws/src/aslam_bringup/launch/turtlebot3_simulation/worlds/cafe</uri>
+    </include>
+-->
+    <model name="cafe">
+    <static>true</static>
+<!--
+    <pose>0 0 -0.075 0 0 0</pose>
+-->
+    <link name="walls">
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>file:///home/tekniker/ROS/aslam_ws/src/aslam_bringup/launch/turtlebot3_simulation/meshes/cafe.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>file:///home/tekniker/ROS/aslam_ws/src/aslam_bringup/launch/turtlebot3_simulation/meshes/cafe.dae</uri>
+          </mesh>
+        </geometry>
+        <cast_shadows>false</cast_shadows>
+      </visual>
+    </link>
+  </model>
+
+    <include>
+      <name>table1</name>
+      <pose>0.5 -1.6 0.2 0 0 0</pose>
+      <uri>model://cafe_table</uri>
+    </include>
+
+    <include>
+      <name>table2</name>
+      <pose>2.4 -5.5 0.2 0 0 0</pose>
+      <uri>model://cafe_table</uri>
+    </include>
+
+    <include>
+      <name>table3</name>
+      <pose>-1.5 -5.5 0.2 0 0 0</pose>
+      <uri>model://cafe_table</uri>
+    </include>
+
+    <include>
+      <name>table4</name>
+      <pose>2.4 -9 0.2 0 0 0</pose>
+      <uri>model://cafe_table</uri>
+    </include>
+
+    <include>
+      <name>table5</name>
+      <pose>-1.5 -9 0.2 0 0 0</pose>
+      <uri>model://cafe_table</uri>
+    </include>
+
+    <model name='door'>
+      <pose frame=''>-3.607326 -10.967286 1.344348 0 -0 0</pose>
+      <link name='Door_1'>
+        <collision name='Door_1_Collision'>
+          <geometry>
+            <box>
+              <size>1.1 0.16 2.4</size>
+            </box>
+          </geometry>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='Door_1_Visual'>
+          <pose frame=''>0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.1 0.16 2.4</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <static>1</static>
+    </model>
+    
+    
+  </world>
+</sdf>

@@ -1,0 +1,11 @@
+<!-- Launch file for -->
+<launch>
+  
+  <arg name="argument" default="default"/>
+  
+  <node name="turtlebot_exploration_3d" pkg="turtlebot_exploration_3d" type="turtlebot_exploration_3d" output="screen">
+    <remap from="/camera/depth_registered/points" to="/top_camera/depth/points"/>
+    <remap from="/cmd_vel_mux/input/teleop" to="/turtlebot_exploration_3d/cmd_vel"/>
+  </node>
+  
+</launch>

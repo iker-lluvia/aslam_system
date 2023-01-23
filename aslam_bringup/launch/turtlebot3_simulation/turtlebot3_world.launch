@@ -1,0 +1,40 @@
+<launch>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="x_pos" default="0.0"/>
+  <arg name="y_pos" default="0.0"/>
+  <arg name="z_pos" default="0.05"/>
+  <arg name="gazebo_gui" default="false"/>
+  <arg name="world_name" default="empty.world"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world_name)"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="$(arg gazebo_gui)"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find aslam_bringup)/launch/turtlebot3_simulation/urdf/turtlebot3_$(arg model)_4x2_centered_planarmove.urdf.xacro" />
+
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model turtlebot3_waffle -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+  </node>
+  
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam command="load" file="$(find aslam_bringup)/launch/turtlebot3_simulation/config/control.yaml" />
+  
+  <!-- Load the controllers -->
+  <node name="robot_controller_spawner" pkg="controller_manager" type="spawner" output="screen" 
+    args="top_camera_tilt_joint_position_controller telescopic_arm_extension_3_joint_position_controller telescopic_arm_extension_2_joint_position_controller telescopic_arm_extension_1_joint_position_controller telescopic_arm_continuous_joint_position_controller joint_state_controller"/>
+  
+  <!-- Convert joint states to TF transforms for rviz, etc -->
+  <node name="turtlebot3_waffle_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+  </node>
+  
+<!--
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+-->
+  
+</launch>

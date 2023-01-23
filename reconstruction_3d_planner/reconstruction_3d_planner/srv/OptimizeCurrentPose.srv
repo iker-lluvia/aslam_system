@@ -1,0 +1,9 @@
+# Change sensor pose to get optimize the information gain
+# Maximum time in seconds to perform the movement
+float32 time
+---
+string message
+bool success
+# Optimal sensor pose
+geometry_msgs/Pose pose
+float32 pan

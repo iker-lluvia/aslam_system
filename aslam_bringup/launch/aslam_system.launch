@@ -1,0 +1,159 @@
+<!-- Launch file for ASLAM system-->
+<launch>
+  
+  <arg name="argument" default="default"/>
+  
+  <!-- Gazebo simulation -->
+  <include file="$(find aslam_bringup)/launch/turtlebot3_simulation/turtlebot3_world.launch">
+    <arg name="gazebo_gui" value="true"/>
+    <!-- P1 -->
+<!--
+    <arg name="x_pos" value="4.0" />
+    <arg name="y_pos" value="-5.0" />
+-->
+    <!-- P2 -->
+<!--
+    <arg name="x_pos" value="-6.5" />
+    <arg name="y_pos" value="6.5" />
+-->
+<!--
+    <arg name="world_name" value="$(find aws_robomaker_bookstore_world)/worlds/bookstore.world"/>
+-->
+    <!-- P0 -->
+<!--
+    <arg name="x_pos" value="-2.0" />
+    <arg name="y_pos" value="1.0" />
+-->
+    <!-- P1 -->
+<!--
+    <arg name="x_pos" value="-6.0" />
+    <arg name="y_pos" value="4.0" />
+-->
+    <!-- P2 -->
+<!--
+    <arg name="x_pos" value="6.0" />
+    <arg name="y_pos" value="-4.5" />
+-->
+<!--
+    <arg name="world_name" value="$(find aslam_bringup)/launch/turtlebot3_simulation/worlds/house_with_door.world"/>
+-->
+    <!-- P1 -->
+<!--
+    <arg name="x_pos" value="6.0" />
+    <arg name="y_pos" value="-4.0" />
+-->
+    <!-- P2 -->
+<!--
+    <arg name="x_pos" value="-8.0" />
+    <arg name="y_pos" value="-3.0" />
+-->
+<!--
+    <arg name="world_name" value="$(find aws_robomaker_small_house_world)/worlds/small_house.world"/>
+-->
+    <!-- P1 -->
+<!--
+    <arg name="x_pos" value="1.0" />
+    <arg name="y_pos" value="7.0" />
+-->
+    <!-- P2 -->
+    <arg name="x_pos" value="-4.0" />
+    <arg name="y_pos" value="-8.0" />
+    <arg name="world_name" value="$(find aws_robomaker_small_warehouse_world)/worlds/no_roof_small_warehouse.world"/>
+
+    <!-- P1 -->
+<!--
+    <arg name="x_pos" value="-3.0" />
+    <arg name="y_pos" value="5.0" />
+-->
+    <!-- P2 -->
+<!--
+    <arg name="x_pos" value="2.0" />
+    <arg name="y_pos" value="-7.0" />
+-->
+<!--
+    <arg name="z_pos" value="0.25" />
+    <arg name="world_name" value="$(find aslam_bringup)/launch/turtlebot3_simulation/worlds/cafe_static_closed.world"/>
+-->
+    <!-- P1 -->
+<!--
+    <arg name="x_pos" value="-13.0" />
+    <arg name="y_pos" value="18.0" />
+-->
+    <!-- P2 -->
+<!--
+    <arg name="x_pos" value="22.0" />
+    <arg name="y_pos" value="-14.0" />
+-->
+<!--
+    <arg name="world_name" value="$(find aslam_bringup)/launch/turtlebot3_simulation/worlds/willowgarage_closed.world"/>
+-->
+  </include>
+  
+  <!-- cmd_vel multiplexor-->
+  <include file="$(find aslam_bringup)/launch/navigation/yocs_cmd_vel_mux.launch"/>
+  
+  <!-- 2D mapping -->
+  <node name="slam_gmapping" pkg="gmapping" type="slam_gmapping" output="screen">
+    <param name="throttle_scans" value="1"/>
+    <param name="base_frame" value="base_link"/>
+    <param name="map_frame" value="map"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="map_update_interval" value="2.0"/>
+    <param name="maxUrange" value="4"/>
+<!--
+    <param name="maxUrange" value="10"/>
+-->
+    <param name="linearUpdate" value="1.0"/>
+    <param name="angularUpdate" value="0.5"/>
+    <param name="temporalUpdate" value="2.0"/>
+    <param name="particles" value="30"/>
+    <param name="xmin" value="-25"/>
+    <param name="ymin" value="-25"/>
+    <param name="xmax" value="25"/>
+    <param name="ymax" value="25"/>
+<!--
+    <param name="xmin" value="-50"/>
+    <param name="ymin" value="-50"/>
+    <param name="xmax" value="50"/>
+    <param name="ymax" value="50"/>
+-->
+    <param name="delta" value="0.05"/> <!-- Resolution of the map (in metres per occupancy grid block) -->
+  </node>
+  
+  <!-- Move base -->
+  <include file="$(find aslam_bringup)/launch/navigation/move_base_turtlebot3_omni.launch">
+    <arg name="cmd_vel_topic" value="/move_base/cmd_vel" />
+    <arg name="odom_topic" value="odom" />
+    <arg name="move_forward_only" value="false" />
+  </include>
+  
+  <!-- 3D uncertainty map -->
+  <node pkg="octomap_server" type="octomap_uncertainty_server_node" name="octomap_server">
+    <remap from="cloud_in" to="/top_camera/depth/points" />
+    
+    <param name="frame_id" type="string" value="odom" />
+    <param name="base_frame_id" type="string" value="base_link" />
+    <param name="height_map" value="false" />
+    <param name="colored_map" value="false" />
+    <param name="uncertainty_map" value="true" />
+    <param name="resolution" value="0.1" />
+    <param name="sensor_model/max_range" value="4.0" />
+    <param name="sensor_model/min_range" value="0.5" />
+    <param name="color/r" value="0.0" />
+    <param name="color/g" value="0.0" />
+    <param name="color/b" value="1.0" />
+    <param name="color/a" value="1.0" />
+    <param name="publish_free_space" value="false" />
+    <param name="color_free/r" value="0.0" />
+    <param name="color_free/g" value="1.0" />
+    <param name="color_free/b" value="0.0" />
+    <param name="color_free/a" value="1.0" />
+  </node>
+
+  
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find aslam_bringup)/launch/rviz/config/turtlebot3_aslam.rviz"/>
+<!--
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find aslam_bringup)/launch/rviz/config/turtlebot3_aslam_turtlebot_exploration_3d.rviz"/>
+-->
+  
+</launch>
