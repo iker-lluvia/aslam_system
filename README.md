@@ -43,3 +43,20 @@ To know the value representing the number of voxels added to the 3D map, the ser
 
 To know the value representing the information offered by the 3D map, the service **/octomap_server/get_map_info** can be called:\
 `rosservice call /octomap_server/get_map_info "{}"`
+
+## Citation
+
+If you use this code, please cite the related paper:
+
+```latex
+@article{lluvia2022camera,
+  author={Lluvia, Iker and Lazkano, Elena and Ansuategi, Ander},
+  journal={IEEE Access},
+  title={{Camera pose optimisation for 3D mapping}},
+  year={2022},
+}
+```
+
+## Authors
+
+Iker Lluvia. Autonomous and Intelligent Systems, [Tekniker](https://www.tekniker.es/es).
