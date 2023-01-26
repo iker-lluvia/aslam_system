@@ -4,9 +4,12 @@ We present an active simultaneous localisation and mapping system that optimises
 
 ## Installation
 
-Move and install outside the ROS workspace the uncertainty octomap package: aslam_system/octomap
+The code has been only tested in Ubuntu 18.04 with ROS Melodic.\
+To use it, the steps are those common to any ROS package, which are:
 
-Compile the workspace where this repository is located.
+1. Move and install outside the ROS workspace the uncertainty octomap package: aslam_system/octomap
+
+2. Compile the workspace where this repository is located.
 
 Note: some dependencies may have to be installed manually.
 
