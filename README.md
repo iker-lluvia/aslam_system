@@ -51,14 +51,15 @@ To know the value representing the information offered by the 3D map, the servic
 If you use this code, please cite the related paper:
 
 ```latex
-@article{lluvia2022camera,
+@ARTICLE{10025720,
   author={Lluvia, Iker and Lazkano, Elena and Ansuategi, Ander},
-  journal={IEEE Access},
-  publisher={IEEE},
-  title={{Camera pose optimisation for 3D mapping}},
-  year={2022},
-  doi={10.1109/ACCESS.2023.3239657}
-}
+  journal={IEEE Access}, 
+  title={Camera pose optimisation for 3D mapping}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={1-1},
+  doi={10.1109/ACCESS.2023.3239657}}
 ```
 
 ## Authors
