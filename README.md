@@ -60,9 +60,9 @@ If you use this code, please cite the related paper:
   publisher={IEEE},
   title={Camera pose optimisation for 3D mapping},
   year={2023},
-  volume={},
+  volume={11},
   number={},
-  pages={1-1},
+  pages={9122-9135},
   doi={10.1109/ACCESS.2023.3239657}
 }
 ```
