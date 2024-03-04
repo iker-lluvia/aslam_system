@@ -84,6 +84,7 @@ namespace planner
       float pan_step_;
       std::string pan_joint_name_;
       std::string pan_link_name_;
+      std::string pan_command_topic_;
       float current_pan_;
       // Goal selection parameters
       float goal_selection_radius_;

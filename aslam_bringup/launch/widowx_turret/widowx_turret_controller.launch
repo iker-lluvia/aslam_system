@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+<!--  rostopic pub /servo_pan_joint/command std_msgs/Float64 "data: 0.0"  -->
+<!--  rostopic pub /servo_tilt_joint/command std_msgs/Float64 "data: 0.0"  -->
+  <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
+    <rosparam file="$(find aslam_bringup)/launch/widowx_turret/config/servos.yaml" command="load" />
+  </node>
+</launch>

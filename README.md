@@ -1,72 +1,56 @@
-# ASLAM system
+# ASLAM System
 
-We present an active simultaneous localisation and mapping system that optimises the pose of the sensor for the 3D reconstruction of an environment, while a 2D Rapidly-Exploring Random Tree algorithm controls the motion of the mobile platform for the ground exploration strategy. You can find a video demo in simulation here: https://www.youtube.com/watch?v=NAPj3_A2e74.
+Stuff for a novel ASLAM system.
+
+## Requirements
+
+1. [Ubuntu 18.04](https://ubuntu.com/tutorials/install-ubuntu-desktop-1804#1-overview)
+2. [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu)
 
 ## Installation
 
-The code has been only tested in Ubuntu 18.04 with ROS Melodic.\
-To use it, the steps are those common to any ROS package, which are:
+0. Install ROS dependencies:<br />
+`sudo apt install -y ros-melodic-navigation ros-melodic-gmapping`<br />
 
-1. Move and install outside the ROS workspace the uncertainty octomap package: aslam_system/octomap
+1. Clone this repository<br />
+`mkdir -p ~/ROS && cd ~/ROS`<br />
+`git clone --recurse-submodules -j8 https://gitlab.tekniker.es/sai/personal/illuvia/freiburg/aslam-system.git`<br />
+Note: you can use a [git cache](https://stackoverflow.com/a/5343146) not to enter credentials for every single submodule.<br />
+3. Move non-ROS packages (octomap) to another folder:<br />
+`mv aslam-system/octomap ~/Software/`<br />
+2.[Create a ROS workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace) and move ROS packages there:<br />
+`mv aslam-system/*/ ~/ROS/aslam_ws/src/`<br />
+3. Compile [octomap](https://gitlab.tekniker.es/sai/personal/illuvia/freiburg/octomap) (octomap and octovis):<br />
+`cd ~/Software/octomap`<br />
+`mkdir octomap/build && cd octomap/build`<br />
+`cmake ..`<br />
+`make -j8`<br />
+`sudo make install`<br />
+`cd ../..`<br />
+`mkdir octovis/build && cd octovis/build`<br />
+`cmake ..`<br />
+Note: you may need to install QGLViewer `sudo apt install libqglviewer-dev-qt5`<br />
+`make -j8`<br />
+4. Compile ROS workspace:<br />
+`roscd && cd .. && catkin_make`<br />
+Note: it may give "fatal error: octomap_msgs/Octomap.h: No such file or directory", just recompile.<br />
 
-2. Compile the workspace where this repository is located.
+## Running
 
-Note: some dependencies may have to be installed manually.
+Set Turtlebot model as an environment variable:<br />
+`export TURTLEBOT3_MODEL=waffle`<br />
+or add it to the ~/.bashrc:<br />
+`echo "export TURTLEBOT3_MODEL=waffle" >> ~/.bashrc && source ~/.bashrc`<br />
 
-## Launch
-1. Run main launch file, which includes yocs_cmd_vel_mux, slam_gmapping, move_base_turtlebot3_omni, octomap_uncertainty_server_node, rviz:\
-`roslaunch aslam_bringup aslam_system.launch`
+### Simulation
 
-2. Run 2D RRT exploration:\
-`roslaunch aslam_bringup rrt_simple.launch`
+1. Run the main simulation launch file:<br />
+`roslaunch aslam_bringup aslam_system_sim.launch`<br />
 
-3. Run optimal camera pose planner:\
-`roslaunch aslam_bringup planner.launch`
+### WidowX MX-28 turret + RealSense D435 camera
 
-Here, we should have all the required nodes and services ready. To start exploration:
+1. [Install RealSense dependencies](https://github.com/IntelRealSense/realsense-ros/tree/2.3.2#installation-instructions) (preferably, from [Linux Debian Installation Guide](https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md#installing-the-packages))<br />
 
-6. Start calling the service **/optimize_current_pose** (offered by the planner) to estimate the camera's next best pose for exploration. To call it in a loop, use the script:\
-`roscd aslam_bringup/`\
-`./optimize_service_loop.sh`
+2. Install [WidowX MX-28 turret's controllers](https://github.com/RobotnikAutomation/widowx_turret) and setup udev rules.<br />
 
-7. Start the 2D exploration system. You can follow the instructions from [here](https://wiki.ros.org/rrt_exploration/Tutorials/singleRobot#Start_Exploration).\
-It requieres 5 points to be published in the /clicked_point topic. It can be done using rviz, and must follow this order:
-
-> 1. top-left
-> 2. bottom-left
-> 3. bottom-right
-> 4. top-right
-> 5. initial point
-
-At this point, the robot should start navigating towards frontiers.
-
-If the robot gets stucked, **teleop_key_turtlebot3.launch** allows to move it manually:\
-`roslaunch aslam_bringup teleop_key_turtlebot3.launch`
-
-To know the value representing the number of voxels added to the 3D map, the service **/octomap_server/get_map_voxels** can be called:\
-`rosservice call /octomap_server/get_map_voxels "{}"`
-
-To know the value representing the information offered by the 3D map, the service **/octomap_server/get_map_info** can be called:\
-`rosservice call /octomap_server/get_map_info "{}"`
-
-## Citation
-
-If you use this code, please cite the related paper:
-
-```latex
-@article{lluvia2023camera,
-  author={Lluvia, Iker and Lazkano, Elena and Ansuategi, Ander},
-  journal={IEEE Access},
-  publisher={IEEE},
-  title={Camera pose optimisation for 3D mapping},
-  year={2023},
-  volume={11},
-  number={},
-  pages={9122-9135},
-  doi={10.1109/ACCESS.2023.3239657}
-}
-```
-
-## Authors
-
-Iker Lluvia. Autonomous and Intelligent Systems, [Tekniker](https://www.tekniker.es/es).
+3. TODO

@@ -58,6 +58,7 @@ namespace planner
       private_nh_.param<float>("pan/step", pan_step_, 0.52); // 30°
       private_nh_.param<std::string>("pan/joint_name", pan_joint_name_, "telescopic_arm_continuous_joint");
       private_nh_.param<std::string>("pan/link_name", pan_link_name_, "telescopic_arm_extension_base_link");
+      private_nh_.param<std::string>("pan/command_topic", pan_command_topic_, "/telescopic_arm_continuous_joint_position_controller/command");
     }
 
     private_nh_.param<float>("goal_selection_radius", goal_selection_radius_, 1.0);
@@ -77,7 +78,7 @@ namespace planner
     srvc_estimate_gain_.waitForExistence();
 
     sensor_traj_pub_ = nh_.advertise<trajectory_msgs::JointTrajectory>("/sensor_trajectory_controller/command", 1);
-    sensor_pos_pub_ = nh_.advertise<std_msgs::Float64>("/telescopic_arm_continuous_joint_position_controller/command", 1);
+    sensor_pos_pub_ = nh_.advertise<std_msgs::Float64>(pan_command_topic_, 1);
 
     //~ ROS_INFO_STREAM("Waiting for /move_base/goal action server to start...");
     //~ move_base_ac_.waitForServer();

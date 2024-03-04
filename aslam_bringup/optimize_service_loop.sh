@@ -10,6 +10,6 @@ k=0
 while true; do
   echo "Call $k"
   echo $(date "+%H:%M:%S (%s)")
-  rosservice call /optimize_current_pose "time: 1.0"
+  rosservice call /optimize_current_pose "time: 0.5"
   k=$((k+1))
 done

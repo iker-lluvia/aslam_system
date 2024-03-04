@@ -1,0 +1,57 @@
+<!-- Launch file for reconstruction 3D planner -->
+<launch>
+  
+  <!-- RGB-D Camera -->
+<!--
+  <include file="$(find aslam_bringup)/launch/realsense/rs_d435.launch"/>
+-->
+  
+  <!-- 3D uncertainty map -->
+  <node pkg="octomap_server" type="octomap_uncertainty_server_node" name="octomap_server">
+    <remap from="cloud_in" to="/camera/depth/color/points" />
+
+    <param name="frame_id" type="string" value="base_link" />
+    <param name="base_frame_id" type="string" value="base_link" />
+    <param name="height_map" value="false" />
+    <param name="colored_map" value="false" />
+    <param name="uncertainty_map" value="true" />
+    <param name="occupied_only_uncertainty" value="true" />
+    <param name="resolution" value="0.1" />
+    <param name="sensor_model/max_range" value="4.0" />
+    <param name="sensor_model/min_range" value="0.5" />
+    <param name="color/r" value="0.0" />
+    <param name="color/g" value="0.0" />
+    <param name="color/b" value="1.0" />
+    <param name="color/a" value="1.0" />
+    <param name="publish_free_space" value="false" />
+    <param name="color_free/r" value="0.0" />
+    <param name="color_free/g" value="1.0" />
+    <param name="color_free/b" value="0.0" />
+    <param name="color_free/a" value="1.0" />
+  </node>
+
+  <!-- 3D camera pose optimizer -->
+  <node name="planner" pkg="reconstruction_3d_planner" type="planner" output="screen">
+    <param name="base_frame" value="base_link"/>
+    <param name="global_frame" value="base_link"/>
+    <param name="sensor_frame" value="camera_depth_optical_frame"/>
+    <param name="fov/resolution/horizontal" value="48"/>
+    <param name="fov/resolution/vertical" value="36"/>
+    <param name="fov/angle/horizontal/min" value="-0.75"/>  <!-- -43° -->
+    <param name="fov/angle/horizontal/max" value="0.75"/>  <!-- 43° -->
+    <param name="fov/angle/vertical/min" value="-0.49"/>  <!-- -28.5° -->
+    <param name="fov/angle/vertical/max" value="0.49"/>  <!-- 28.5° -->
+    <param name="fov/range/min" value="0.3"/>
+    <param name="fov/range/max" value="4.0"/>
+    <param name="unknown_gain_value" value="1.0"/>  <!-- Not used -->
+    <param name="pan/optimize" value="true"/>
+    <param name="pan/vel" value="6.28"/>  <!-- 360º/s -->
+    <param name="pan/min" value="-3.14"/>  <!-- -180º -->
+    <param name="pan/max" value="3.14"/>  <!-- 180º -->
+    <param name="pan/step" value="0.35"/>  <!-- 45º -->
+    <param name="pan/joint_name" value="servo_pan_joint"/>
+    <param name="pan/link_name" value="top_plate_link"/>
+    <param name="pan/command_topic" value="/servo_pan_joint/command"/>
+  </node>
+  
+</launch>

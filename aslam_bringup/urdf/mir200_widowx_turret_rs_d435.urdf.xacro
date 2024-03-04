@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<robot name="widowx_turret_with_rsd435" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find widowx_turret_description)/urdf/widowx_turret.urdf.xacro"/>
+  <xacro:arg name="use_nominal_extrinsics" default="false"/>
+  <xacro:include filename="$(find realsense2_description)/urdf/_d455.urdf.xacro" />
+  
+  <link name="turret_base">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+    </visual>
+  </link>
+  
+  <xacro:widowx_turret parent="turret_base" prefix="">
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </xacro:widowx_turret>
+  
+  <xacro:sensor_d455 parent="top_plate_link" use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
+    <origin xyz="0 0 0" rpy="0 0 1.57"/>
+  </xacro:sensor_d455>
+  
+</robot>
